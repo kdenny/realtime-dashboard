@@ -1,29 +1,29 @@
 <template>
   <div class="dashboard">
-    <div class="row">
-      <div class="col-md-12">
-        <vuestic-alert type="success" :withCloseBtn="true">
-          <span class="badge badge-pill badge-success">{{'extra.alerts.success' | translate}}</span>
-          {{'extra.alerts.successMessage' | translate}}
-          <i class="fa fa-close alert-close"></i>
-        </vuestic-alert>
-      </div>
-    </div>
+    <!--<div class="row">-->
+      <!--<div class="col-md-12">-->
+        <!--<vuestic-alert type="success" :withCloseBtn="true">-->
+          <!--<span class="badge badge-pill badge-success">{{'extra.alerts.success' | translate}}</span>-->
+          <!--{{'extra.alerts.successMessage' | translate}}-->
+          <!--<i class="fa fa-close alert-close"></i>-->
+        <!--</vuestic-alert>-->
+      <!--</div>-->
+    <!--</div>-->
 
     <dashboard-info-widgets></dashboard-info-widgets>
 
     <vuestic-widget class="no-padding no-v-padding">
       <vuestic-tabs :names="[$t('dashboard.content'), $t('dashboard.userAgent'), $t('dashboard.geography'), $t('dashboard.referral')]" ref="tabs">
-        <div :slot="$t('dashboard.dataVisualization')">
+        <div :slot="$t('dashboard.content')">
           <data-visualisation-tab></data-visualisation-tab>
         </div>
-        <div :slot="$t('dashboard.usersAndMembers')">
+        <div :slot="$t('dashboard.userAgent')">
           <users-members-tab></users-members-tab>
         </div>
-        <div :slot="$t('dashboard.setupProfile')">
+        <div :slot="$t('dashboard.geography')">
           <setup-profile-tab></setup-profile-tab>
         </div>
-        <div :slot="$t('dashboard.features')">
+        <div :slot="$t('dashboard.referral')">
           <features-tab></features-tab>
         </div>
       </vuestic-tabs>
@@ -46,7 +46,7 @@
   import DashboardBottomWidgets from './DashboardBottomWidgets.vue'
 
   export default {
-    name: 'dashboard',
+    name: 'pageviews',
     components: {
       DataVisualisationTab,
       VuesticWidget,

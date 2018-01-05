@@ -1,9 +1,13 @@
 <template>
   <nav class="navbar app-navbar navbar-toggleable-md">
     <div class="navbar-brand-container d-flex align-items-center justify-content-start">
-      <a class="navbar-brand" href="#">
-        <i class="i-vuestic"></i>
+      <a class="navbar-brand" href="#" style="color: whitesmoke;">
+        <!--<i class="i-vuestic"></i>-->
+        Piano
       </a>
+      <!--<a href='#/' id="logo" class="navbar-brand">-->
+        <!--<img src='https://imgur.com/B5iWaic' title='' />-->
+      <!--</a>-->
     </div>
 
     <div class="row navbar-container">
@@ -16,7 +20,8 @@
       <div class="offset-lg-8"></div>
       <div class="col nav-item dropdown navbar-dropdown d-flex align-items-center justify-content-center" v-dropdown>
         <a class="nav-link dropdown-toggle d-flex align-items-center justify-content" href="#" @click.prevent="closeMenu">
-          <span class="i-nav-messages notify"></span>
+          <!--<span class="i-nav-messages notify"></span>-->
+          Filters
         </a>
         <div class="dropdown-menu">
           <div class="dropdown-menu-content">
@@ -34,7 +39,8 @@
       </div>
       <div class="col nav-item dropdown navbar-dropdown d-flex align-items-center justify-content-center" v-dropdown>
         <a class="nav-link dropdown-toggle d-flex align-items-center justify-content" href="#" @click.prevent="closeMenu">
-          <span class="i-nav-notification notify"></span>
+          <!--<span class="i-nav-notification notify"></span>-->
+          <!--<span>Filters</span>-->
         </a>
         <div class="dropdown-menu">
           <div class="dropdown-menu-content">
@@ -55,9 +61,10 @@
       </div>
       <div class="col nav-item dropdown navbar-dropdown d-flex align-items-center justify-content-center" v-dropdown>
         <a class="nav-link dropdown-toggle d-flex align-items-center justify-content" href="#" @click.prevent="closeMenu">
-          <span class="avatar-container">
-            <img src="http://i.imgur.com/nfa5itq.png" />
-          </span>
+          <!--<span class="avatar-container">-->
+            <!--<img src="http://i.imgur.com/nfa5itq.png" />-->
+          <!--</span>-->
+          <span>Select Property</span>
         </a>
         <div class="dropdown-menu last">
           <div class="dropdown-menu-content">
