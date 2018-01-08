@@ -4,9 +4,10 @@
       <vuestic-widget class="info-widget">
         <div class="info-widget-inner">
           <div class="stats">
-            <div class="stats-number">
+            <div class="stats-number" v-if="viewCount">
               <i class="ion ion-arrow-up-c text-primary stats-icon"></i>
-              90,000
+              {{ viewCount }}
+
             </div>
             <div class="stats-title">Pageviews in last <strong>12 minutes</strong></div>
           </div>
@@ -68,7 +69,14 @@
     components: {
       ProgressBar
     },
-
+    computed: {
+      pubData () {
+        return this.$store.getters.formattedResult
+      },
+      viewCount () {
+        return this.$store.getters.pageviewCount
+      }
+    },
     mounted () {
       this.$refs.circleProgress.$data.value = 13
     }

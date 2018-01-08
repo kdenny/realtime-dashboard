@@ -11,12 +11,14 @@ import VuesticPlugin from 'src/components/vuestic-components/vuestic-components-
 import VueNativeSock from 'vue-native-websocket'
 import './i18n'
 
+window._ = require('lodash')
+
 Vue.use(VuesticPlugin)
 Vue.use(BootstrapVue)
 
 // NOTE: workaround for VeeValidate + vuetable-2
 Vue.use(VeeValidate, {fieldsBagName: 'formFields'})
-Vue.use(VueNativeSock, 'ws://172.31.22.33:9105/wsApp/o19WonOrHQ', { store: store })
+Vue.use(VueNativeSock, 'ws://172.31.22.33:9105/wsApp/o19WonOrHQ', { store: store, format: 'json' })
 
 sync(store, router)
 

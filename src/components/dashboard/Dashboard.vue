@@ -2,6 +2,9 @@
   <div class="dashboard">
     <div class="row">
       <div class="col-md-12">
+        <button class="btn btn-primary" v-on:click="testChange">
+          Change {{formattedResult}}
+        </button>
         <vuestic-alert type="success" :withCloseBtn="true">
           <span class="badge badge-pill badge-success">{{'extra.alerts.success' | translate}}</span>
           {{'extra.alerts.successMessage' | translate}}
@@ -57,6 +60,17 @@
       SetupProfileTab,
       FeaturesTab,
       DashboardBottomWidgets
+    },
+    methods: {
+      testChange: function (event) {
+        // `this` inside methods points to the Vue instance
+        this.$store.dispatch('testChange2')
+      }
+    },
+    computed: {
+      formattedResult () {
+        return this.$store.getters.formattedResult
+      }
     }
   }
 </script>
