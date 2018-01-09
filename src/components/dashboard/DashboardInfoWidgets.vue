@@ -4,11 +4,12 @@
       <vuestic-widget class="info-widget">
         <div class="info-widget-inner">
           <div class="stats">
-            <div class="stats-number">
+            <div class="stats-number" v-if="viewCount">
               <i class="ion ion-arrow-up-c text-primary stats-icon"></i>
-              59
+              {{ viewCount }}
+
             </div>
-            <div class="stats-title">{{'dashboard.elements' | translate}}</div>
+            <div class="stats-title">Pageviews in last <strong>12 minutes</strong></div>
           </div>
         </div>
       </vuestic-widget>
@@ -19,24 +20,24 @@
           <div class="stats">
             <div class="stats-number">
               <i class="ion ion-arrow-down-c text-danger stats-icon"></i>
-              12
+              76
             </div>
-            <div class="stats-title">{{'dashboard.versions' | translate}}</div>
+            <div class="stats-title">Checkouts started in last <strong>12 minutes</strong></div>
           </div>
         </div>
       </vuestic-widget>
     </div>
     <div class="col-md-6 col-xl-3">
-      <vuestic-widget class="info-widget brand-danger">
+      <vuestic-widget class="info-widget brand-danger" v-if="statCards">
         <div class="info-widget-inner">
           <div class="info-widget-inner has-chart">
             <div class="stats">
               <div class="stats-number">
-                425
+                {{ statCards.loggedIn }}%
               </div>
-              <div class="stats-title">Commits</div>
+              <div class="stats-title">Registered Users</div>
             </div>
-            <div class="chart-container">
+            <div class="chart-container" v-if="loggedInPercent > 0">
               <progress-bar type="circle" ref="circleProgress" :colorName="'white'" :backgroundColorName="'danger'"
                             :startColorName="'danger'"></progress-bar>
             </div>
@@ -45,14 +46,14 @@
       </vuestic-widget>
     </div>
     <div class="col-md-6 col-xl-3">
-      <vuestic-widget class="info-widget brand-info">
+      <vuestic-widget class="info-widget brand-info" v-if="statCards">
         <div class="info-widget-inner">
           <div class="stats">
             <div class="stats-number">
               <i class="ion ion-android-people stats-icon icon-wide"></i>
-              5
+              {{ statCards.adblock }}%
             </div>
-            <div class="stats-title">{{'dashboard.teamMembers' | translate}}</div>
+            <div class="stats-title">Adblock Disabled</div>
           </div>
         </div>
       </vuestic-widget>
@@ -68,9 +69,34 @@
     components: {
       ProgressBar
     },
-
+    data () {
+      return {loggedInPercent: 0}
+    },
+    computed: {
+      pubData () {
+        return this.$store.getters.formattedResult
+      },
+      viewCount () {
+        return this.$store.getters.pageviewCount
+      },
+      statCards () {
+        if (this.$refs.circleProgress) {
+          this.$refs.circleProgress.$data.value = Math.round(this.$store.getters.statCards.loggedIn)
+        } else {
+          if (!isNaN(this.$store.getters.statCards.loggedIn)) {
+            this.loggedInPercent = Math.round(this.$store.getters.statCards.loggedIn)
+            console.log(this.loggedInPercent)
+          }
+        }
+        return this.$store.getters.statCards
+      }
+    },
     mounted () {
-      this.$refs.circleProgress.$data.value = 70
+//      console.log(this.$refs.circleProgress.$data.value)
+      if (this.loggedInPercent > 0) {
+        console.log(this.loggedInPercent)
+        this.$refs.circleProgress.$data.value = this.loggedInPercent
+      }
     }
   }
 </script>

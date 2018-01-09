@@ -29,18 +29,18 @@
       return {
         posts: [
           {
-            name: 'Irina Myatelskaya',
-            text: 'joined the network',
+            name: 'Retail section',
+            text: 'pageviews are 53% higher than normal today',
             photoURL: 'http://i.imgur.com/VuTDC8u.png'
           },
           {
-            name: 'Andrei Hrabouski',
-            text: 'has just started a live video',
+            name: 'Checkouts',
+            text: 'are 24% higher than normal today',
             photoURL: 'http://i.imgur.com/W3mGrmW.png'
           },
           {
-            name: 'Evan You',
-            text: 'joined the network',
+            name: 'Desktop traffic',
+            text: 'is 18% lower than normal today',
             photoURL: 'http://i.imgur.com/D7DOGBH.jpg'
           }
         ],

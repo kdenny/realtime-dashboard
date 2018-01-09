@@ -11,41 +11,41 @@ export default {
   children: [
     {
       name: 'PageviewDashboard',
-      path: '/pageviews',
-      component: lazyLoading('pageviews/Pageviews'),
+      path: '/dashboard',
+      component: lazyLoading('dashboard/Dashboard'),
       meta: {
         default: true,
         title: 'Dashboard'
       }
     },
     {
-      name: 'GoogleMaps',
-      path: '/maps/google-maps',
-      component: lazyLoading('maps/google-maps/GoogleMapsPage'),
+      name: 'ContentPage',
+      path: '/pageviews/content',
+      component: lazyLoading('pageviews/content/Content'),
       meta: {
         title: 'Content'
       }
     },
     {
-      name: 'LeafletMaps',
-      path: '/maps/leaflet-maps',
-      component: lazyLoading('maps/leaflet-maps/LeafletMapsPage'),
+      name: 'UserAgentPage',
+      path: '/pageviews/user-agent',
+      component: lazyLoading('pageviews/user-agent/UserAgent'),
       meta: {
         title: 'User Agent'
       }
     },
     {
-      name: 'BubbleMaps',
-      path: '/maps/bubble-maps',
+      name: 'GeographyPage',
+      path: '/pageviews/geography',
       component: lazyLoading('maps/bubble-maps/BubbleMapsPage'),
       meta: {
         title: 'Geography'
       }
     },
     {
-      name: 'LineMaps',
-      path: '/maps/line-maps',
-      component: lazyLoading('maps/line-maps/LineMapsPage'),
+      name: 'ReferrerPage',
+      path: '/pageviews/referrer',
+      component: lazyLoading('pageviews/referrer/Referrer'),
       meta: {
         title: 'Referrer'
       }

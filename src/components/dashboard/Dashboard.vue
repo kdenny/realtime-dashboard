@@ -1,33 +1,30 @@
 <template>
   <div class="dashboard">
-    <div class="row">
-      <div class="col-md-12">
-        <button class="btn btn-primary" v-on:click="testChange">
-          Change {{formattedResult}}
-        </button>
-        <vuestic-alert type="success" :withCloseBtn="true">
-          <span class="badge badge-pill badge-success">{{'extra.alerts.success' | translate}}</span>
-          {{'extra.alerts.successMessage' | translate}}
-          <i class="fa fa-close alert-close"></i>
-        </vuestic-alert>
-      </div>
-    </div>
+    <!--<div class="row">-->
+      <!--<div class="col-md-12">-->
+        <!--<vuestic-alert type="success" :withCloseBtn="true">-->
+          <!--<span class="badge badge-pill badge-success">{{'extra.alerts.success' | translate}}</span>-->
+          <!--{{'extra.alerts.successMessage' | translate}}-->
+          <!--<i class="fa fa-close alert-close"></i>-->
+        <!--</vuestic-alert>-->
+      <!--</div>-->
+    <!--</div>-->
 
     <dashboard-info-widgets></dashboard-info-widgets>
 
     <vuestic-widget class="no-padding no-v-padding">
       <vuestic-tabs :names="[$t('dashboard.content'), $t('dashboard.userAgent'), $t('dashboard.geography'), $t('dashboard.referral')]" ref="tabs">
-        <div :slot="$t('dashboard.dataVisualization')">
-          <data-visualisation-tab></data-visualisation-tab>
+        <div :slot="$t('dashboard.content')">
+          <content-tab></content-tab>
         </div>
-        <div :slot="$t('dashboard.usersAndMembers')">
-          <users-members-tab></users-members-tab>
+        <div :slot="$t('dashboard.userAgent')">
+          <user-agent-tab></user-agent-tab>
         </div>
-        <div :slot="$t('dashboard.setupProfile')">
-          <setup-profile-tab></setup-profile-tab>
+        <div :slot="$t('dashboard.geography')">
+          <geography-tab></geography-tab>
         </div>
-        <div :slot="$t('dashboard.features')">
-          <features-tab></features-tab>
+        <div :slot="$t('dashboard.referral')">
+          <referral-tab></referral-tab>
         </div>
       </vuestic-tabs>
     </vuestic-widget>
@@ -42,35 +39,24 @@
   import VuesticAlert from '../vuestic-components/vuestic-alert/VuesticAlert'
   import DashboardInfoWidgets from './DashboardInfoWidgets'
   import VuesticTabs from '../vuestic-components/vuestic-tabs/VuesticTabs.vue'
-  import UsersMembersTab from './users-and-members-tab/UsersMembersTab.vue'
-  import SetupProfileTab from './setup-profile-tab/SetupProfileTab.vue'
-  import FeaturesTab from './features-tab/FeaturesTab.vue'
-  import DataVisualisationTab from './data-visualisation-tab/DataVisualisation.vue'
+  import UserAgentTab from './user-agent-tab/UserAgentTab.vue'
+  import GeographyTab from './geography-tab/GeographyTab.vue'
+  import ReferralTab from './referral-tab/ReferralTab.vue'
+  import ContentTab from './content-tab/Content.vue'
   import DashboardBottomWidgets from './DashboardBottomWidgets.vue'
 
   export default {
     name: 'dashboard',
     components: {
-      DataVisualisationTab,
+      ContentTab,
       VuesticWidget,
       VuesticAlert,
       DashboardInfoWidgets,
       VuesticTabs,
-      UsersMembersTab,
-      SetupProfileTab,
-      FeaturesTab,
+      UserAgentTab,
+      GeographyTab,
+      ReferralTab,
       DashboardBottomWidgets
-    },
-    methods: {
-      testChange: function (event) {
-        // `this` inside methods points to the Vue instance
-        this.$store.dispatch('testChange2')
-      }
-    },
-    computed: {
-      formattedResult () {
-        return this.$store.getters.formattedResult
-      }
     }
   }
 </script>

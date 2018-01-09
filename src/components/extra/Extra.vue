@@ -27,13 +27,13 @@
     <vuestic-widget class="no-v-padding">
       <vuestic-tabs class="tabs" :names="[$t('extra.chart'), $t('extra.setupProfile'), $t('extra.overview')]">
         <div slot="Overview" class="d-flex justify-content-center">
-          <overview-tab></overview-tab>
+          <!--<overview-tab></overview-tab>-->
         </div>
         <div slot="Chart" class="d-flex justify-content-center">
           <vuestic-chart v-bind:data="chartData" type="line"></vuestic-chart>
         </div>
         <div slot="Setup Profile" class="d-flex justify-content-center">
-          <setup-profile-tab wizardType="simple"></setup-profile-tab>
+          <!--<setup-profile-tab wizardType="simple"></setup-profile-tab>-->
         </div>
       </vuestic-tabs>
     </vuestic-widget>
@@ -76,15 +76,13 @@
   import VuesticChat from '../../components/vuestic-components/vuestic-chat/VuesticChat'
   import VuesticFeed from '../vuestic-components/vuestic-feed/VuesticFeed.vue'
   import VuesticSocialNews from '../vuestic-components/vuestic-social-news/VuesticSocialNews.vue'
-  import OverviewTab from '../dashboard/features-tab/FeaturesTab.vue'
-  import SetupProfileTab from '../dashboard/setup-profile-tab/SetupProfileTab.vue'
+//  import OverviewTab from '../dashboard/features-tab/FeaturesTab.vue'
+//  import SetupProfileTab from '../dashboard/setup-profile-tab/SetupProfileTab.vue'
   import chartData from '../statistics/charts/LineChartData'
 
   export default {
     name: 'extra',
     components: {
-      SetupProfileTab,
-      OverviewTab,
       VuesticSocialNews,
       VuesticFeed,
       VuesticTabs,
