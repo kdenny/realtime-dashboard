@@ -10,7 +10,7 @@
               :apiUrl="apiUrl"
               :apiMode="apiMode"
               :fields="tableFields"
-              :data="tableData"
+              v-bind:data="data"
               :dataTotal="dataCount"
               :dataManager="dataManager"
               :css="css.table"
@@ -95,6 +95,13 @@
         moreParams: {},
         dataCount: 0,
         css: DataTableStyles
+      }
+    },
+    watch: {
+      data: function (val) {
+//        console.log(val)
+        this.tableData = val
+        this.$refs.vuetable.refresh()
       }
     },
     methods: {

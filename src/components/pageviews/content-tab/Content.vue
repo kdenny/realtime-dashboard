@@ -6,13 +6,12 @@
           <vuestic-chart v-bind:data="donutChartData" type="donut"></vuestic-chart>
         </div>
       </div>
-      <div class="col-md-6">
+      <div class="col-md-6" v-if="pubData">
         <data-table :apiMode="apiMode"
-                    :data="tableData"
+                    :data="pubData.contentSection"
                     :tableFields="tableFields"
                     :itemsPerPage="itemsPerPage"
                     :onEachSide="onEachSide"
-                    :sortFunctions="sortFunctions"
                     :paginationPath="paginationPath">
         </data-table>
       </div>
@@ -26,26 +25,23 @@
   import DataTable from '../../vuestic-components/vuestic-datatable/VuesticDataTable.vue'
   import Vue from 'vue'
   import BadgeColumn from '../../tables/BadgeColumn.vue'
-  import LocalData from '../../vuestic-components/vuestic-datatable/data/local-data'
+//  import LocalData from '../../vuestic-components/vuestic-datatable/data/local-data'
   import FieldsDef from './fields-definition'
 
   Vue.component('badge-column', BadgeColumn)
 
   export default {
-    name: 'data-visualisation-tab',
-
+    name: 'content-tab',
     components: {
       DataTable,
       VuesticChart,
       DonutChartData
     },
-
     data () {
       return {
         donutChartData: DonutChartData,
         apiMode: false,
         sortFunctions: FieldsDef.sortFunctions,
-        tableData: LocalData.data,
         onEachSide: 1,
         tableFields: FieldsDef.tableFields,
         paginationPath: 'pagination',
@@ -57,6 +53,17 @@
             value: 6
           }
         ]
+      }
+    },
+    computed: {
+      pubData () {
+        return this.$store.getters.formattedResult
+      },
+      viewCount () {
+        return this.$store.getters.pageviewCount
+      },
+      statCards () {
+        return this.$store.getters.statCards
       }
     }
   }

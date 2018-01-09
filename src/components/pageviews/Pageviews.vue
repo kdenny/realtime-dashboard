@@ -15,16 +15,16 @@
     <vuestic-widget class="no-padding no-v-padding">
       <vuestic-tabs :names="[$t('dashboard.content'), $t('dashboard.userAgent'), $t('dashboard.geography'), $t('dashboard.referral')]" ref="tabs">
         <div :slot="$t('dashboard.content')">
-          <data-visualisation-tab></data-visualisation-tab>
+          <content-tab></content-tab>
         </div>
         <div :slot="$t('dashboard.userAgent')">
-          <users-members-tab></users-members-tab>
+          <user-agent-tab></user-agent-tab>
         </div>
         <div :slot="$t('dashboard.geography')">
-          <setup-profile-tab></setup-profile-tab>
+          <geography-tab></geography-tab>
         </div>
         <div :slot="$t('dashboard.referral')">
-          <features-tab></features-tab>
+          <referral-tab></referral-tab>
         </div>
       </vuestic-tabs>
     </vuestic-widget>
@@ -39,23 +39,23 @@
   import VuesticAlert from '../vuestic-components/vuestic-alert/VuesticAlert'
   import DashboardInfoWidgets from './DashboardInfoWidgets'
   import VuesticTabs from '../vuestic-components/vuestic-tabs/VuesticTabs.vue'
-  import UsersMembersTab from './users-and-members-tab/UsersMembersTab.vue'
-  import SetupProfileTab from './setup-profile-tab/SetupProfileTab.vue'
-  import FeaturesTab from './features-tab/FeaturesTab.vue'
-  import DataVisualisationTab from './data-visualisation-tab/DataVisualisation.vue'
+  import UserAgentTab from './user-agent-tab/UserAgentTab.vue'
+  import GeographyTab from './geography-tab/GeographyTab.vue'
+  import ReferralTab from './referral-tab/ReferralTab.vue'
+  import ContentTab from './content-tab/Content.vue'
   import DashboardBottomWidgets from './DashboardBottomWidgets.vue'
 
   export default {
     name: 'pageviews',
     components: {
-      DataVisualisationTab,
+      ContentTab,
       VuesticWidget,
       VuesticAlert,
       DashboardInfoWidgets,
       VuesticTabs,
-      UsersMembersTab,
-      SetupProfileTab,
-      FeaturesTab,
+      UserAgentTab,
+      GeographyTab,
+      ReferralTab,
       DashboardBottomWidgets
     }
   }

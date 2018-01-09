@@ -1,6 +1,6 @@
 import * as types from '../../mutation-types'
-import dashboard from './dashboard'
-import pageviews from './pageviews'
+// import dashboard from './dashboard'
+// import pageviews from './pageviews'
 import composer from './composer'
 import checkout from './checkout'
 import pageviews2 from './pageviews_2'
@@ -13,8 +13,8 @@ import pageviews2 from './pageviews_2'
 
 const state = {
   items: [
-    pageviews,
-    dashboard,
+    // pageviews,
+    // dashboard,
     pageviews2,
     // statistics,
     composer,

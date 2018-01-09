@@ -3,12 +3,21 @@ import lazyLoading from './lazyLoading'
 export default {
   name: 'Pageviews2',
   meta: {
-    expanded: false,
+    expanded: true,
     title: 'menu.pageviews',
     iconClass: 'vuestic-icon vuestic-icon-maps'
   },
 
   children: [
+    {
+      name: 'PageviewDashboard',
+      path: '/pageviews',
+      component: lazyLoading('pageviews/Pageviews'),
+      meta: {
+        default: true,
+        title: 'Dashboard'
+      }
+    },
     {
       name: 'GoogleMaps',
       path: '/maps/google-maps',

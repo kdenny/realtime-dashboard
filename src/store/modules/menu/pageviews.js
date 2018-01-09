@@ -5,8 +5,9 @@ export default {
   path: '/pageviews',
   component: lazyLoading('pageviews/Pageviews'),
   meta: {
-    expanded: false,
-    title: 'menu.pageviews',
+    default: true,
+    // expanded: false,
+    title: 'menu.pageviewsDash',
     iconClass: 'vuestic-icon vuestic-icon-dashboard'
   },
 

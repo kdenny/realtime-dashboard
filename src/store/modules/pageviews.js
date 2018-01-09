@@ -11,8 +11,9 @@ const state = {
     previous: {}
   },
   totalViews: 0,
+  computedStats: {},
   rdata: [],
-  pubData: [],
+  pubData: {},
   timerCount: 0
 }
 
@@ -67,9 +68,9 @@ const calcDiffs = function () {
 const getters = {
   formattedResult: (state) => {
     let v = {...state.socket.message}
-    console.log(v)
+    // console.log(v)
     if (v.type === 'PageviewAggregationResultWrapper') {
-      console.log('Working')
+      // console.log('Working')
       const modifiedResult = reformat(v)
 
       if (state.rdata.results) {
@@ -87,7 +88,7 @@ const getters = {
 
       // Finally set the data back into the model
       // state.pubData = modifiedResult
-      console.log(modifiedResult)
+      // console.log(modifiedResult)
       return modifiedResult
     } else {
       console.log(v.type)
@@ -96,7 +97,11 @@ const getters = {
   },
   pageviewCount: (state) => {
     return state.totalViews
+  },
+  statCards: (state) => {
+    return state.computedStats
   }
+
 }
 
 const mutations = {
@@ -110,14 +115,24 @@ const mutations = {
     console.error(state, event)
   },
   [types.SOCKET_ONMESSAGE] (state, message) {
-    console.log(message)
     state.socket.message = message
     if (message.type === 'PageviewAggregationResultWrapper') {
       state.totalViews = message.value.data.count
+      state.pubData = message.value.data
+      state.pubData.user.values.forEach(uf => {
+        if (uf.LOGIN) {
+          state.computedStats.loggedIn = Math.round((uf.LOGIN / state.totalViews) * 1000) / 10
+        }
+      })
+      state.pubData.adBlock.values.forEach(ua => {
+        if (ua.OFF) {
+          state.computedStats.adblock = Math.round((ua.OFF / state.totalViews) * 1000) / 10
+        }
+      })
     }
   },
   [types.UPDATE_PAGEVIEWS] (state, message) {
-    console.log('Current', state.pageviews.current)
+    // console.log('Current', state.pageviews.current)
     // state.pageviews.past = {...state.pageviews.current}
     // state.pageviews.current = message
     // console.log('New', state.pageviews.current)
