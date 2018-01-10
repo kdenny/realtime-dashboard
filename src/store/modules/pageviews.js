@@ -22,6 +22,7 @@ const state = {
   timerCount: 0
 }
 
+let wSocket = {}
 const datasets = ['user', 'adBlock', 'topUrl', 'author', 'contentSection', 'userAgent.platform', 'userAgent.operatingSystem', 'userAgent.browser', 'geoData.country', 'geoData.region', 'geoData.city', 'referrer', 'rawReferrer']
 const reformat = function (data) {
   let newData = {}
@@ -120,27 +121,12 @@ const mutations = {
     console.error(state, event)
   },
   [types.OPEN_SOCKET] (state, socket) {
-    console.log('Opening')
     // let url = 'ws://172.31.22.33:9105/wsApp/' + state.client
     state.iSocket = socket
-    // state.iSocket.addEventListener('message', function (e) {
-    //   var message = JSON.parse(e.data)
-    //   state.socket.message = message
-    //   if (message.type === 'PageviewAggregationResultWrapper') {
-    //     state.totalViews = message.value.data.count
-    //     state.pubData = message.value.data
-    //     state.pubData.user.values.forEach(uf => {
-    //       if (uf.LOGIN) {
-    //         state.computedStats.loggedIn = Math.round((uf.LOGIN / state.totalViews) * 1000) / 10
-    //       }
-    //     })
-    //     state.pubData.adBlock.values.forEach(ua => {
-    //       if (ua.OFF) {
-    //         state.computedStats.adblock = Math.round((ua.OFF / state.totalViews) * 1000) / 10
-    //       }
-    //     })
-    //   }
-    // })
+  },
+  [types.CLOSE_SOCKET] (state) {
+    console.log(state.iSocket)
+    wSocket.close()
   },
   [types.SOCKET_ONMESSAGE] (state, message) {
     state.socket.message = message
@@ -160,10 +146,10 @@ const mutations = {
     }
   },
   [types.UPDATE_DATA] (state, message) {
-    state.socket.message = message
-    if (message.type === 'PageviewAggregationResultWrapper') {
-      state.totalViews = message.value.data.count
-      state.pubData = message.value.data
+    state.socket.message = message.message
+    if (message.message.type === 'PageviewAggregationResultWrapper') {
+      state.totalViews = message.message.value.data.count
+      state.pubData = message.message.value.data
       state.pubData.user.values.forEach(uf => {
         if (uf.LOGIN) {
           state.computedStats.loggedIn = Math.round((uf.LOGIN / state.totalViews) * 1000) / 10
@@ -175,6 +161,24 @@ const mutations = {
         }
       })
     }
+  },
+  [types.SELECT_APP] (state, app) {
+    console.log(app)
+    state.app = app.app.app
+    // if (message.message.type === 'PageviewAggregationResultWrapper') {
+    //   state.totalViews = message.message.value.data.count
+    //   state.pubData = message.message.value.data
+    //   state.pubData.user.values.forEach(uf => {
+    //     if (uf.LOGIN) {
+    //       state.computedStats.loggedIn = Math.round((uf.LOGIN / state.totalViews) * 1000) / 10
+    //     }
+    //   })
+    //   state.pubData.adBlock.values.forEach(ua => {
+    //     if (ua.OFF) {
+    //       state.computedStats.adblock = Math.round((ua.OFF / state.totalViews) * 1000) / 10
+    //     }
+    //   })
+    // }
   },
   [types.RESET_COUNT] (state) {
     state.timerCount = 0
@@ -191,12 +195,37 @@ const actions = {
     })
   },
   openSocket ({ commit, state }) {
-    let url = 'ws://172.31.22.33:9105/wsApp/' + state.client
-    let iSocket = new WebSocket(url)
+    let url = 'ws://172.31.22.33:9105/'
+    if (state.app !== 'pageviews') {
+      url += state.app + '/'
+    }
+    url += 'wsApp/' + state.client
+    wSocket = new WebSocket(url)
     commit(types.OPEN_SOCKET, {
-      socket: iSocket
+      socket: wSocket
     })
-    iSocket.addEventListener('message', function (e) {
+    wSocket.addEventListener('message', function (e) {
+      var message = JSON.parse(e.data)
+      commit(types.UPDATE_DATA, {
+        message: message
+      })
+    })
+  },
+  switchApp ({ commit, state }, app) {
+    commit(types.SELECT_APP, {
+      app: app
+    })
+    commit(types.CLOSE_SOCKET)
+    let url = 'ws://172.31.22.33:9105/'
+    if (state.app !== 'pageviews') {
+      url += state.app + '/'
+    }
+    url += 'wsApp/' + state.client
+    wSocket = new WebSocket(url)
+    commit(types.OPEN_SOCKET, {
+      socket: wSocket
+    })
+    wSocket.addEventListener('message', function (e) {
       var message = JSON.parse(e.data)
       console.log(message)
       commit(types.UPDATE_DATA, {

@@ -9,7 +9,8 @@
         <!--</vuestic-alert>-->
       <!--</div>-->
     <!--</div>-->
-    <button v-on:click="openSocket">Click me</button>
+    <button v-on:click="switchComposer">Click me</button>
+    <button v-on:click="switchComposer">Click me</button>
 
     <dashboard-info-widgets></dashboard-info-widgets>
 
@@ -59,9 +60,14 @@
       ReferralTab,
       DashboardBottomWidgets
     },
+    mounted () {
+      this.$store.dispatch('openSocket')
+    },
     methods: {
-      openSocket: function () {
-        this.$store.dispatch('openSocket')
+      switchComposer: function () {
+        this.$store.dispatch('switchApp', {
+          app: 'composer'
+        })
       }
     }
   }
