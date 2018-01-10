@@ -9,6 +9,7 @@
         <!--</vuestic-alert>-->
       <!--</div>-->
     <!--</div>-->
+    <button v-on:click="openSocket">Click me</button>
 
     <dashboard-info-widgets></dashboard-info-widgets>
 
@@ -57,6 +58,11 @@
       GeographyTab,
       ReferralTab,
       DashboardBottomWidgets
+    },
+    methods: {
+      openSocket: function () {
+        this.$store.dispatch('openSocket')
+      }
     }
   }
 </script>

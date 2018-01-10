@@ -1,5 +1,6 @@
 import * as types from '../mutation-types'
-
+// import createWebSocketPlugin from '../modules/websocket/wsPlugin'
+export const strict = false
 const state = {
   socket: {
     isConnected: false,
@@ -13,7 +14,11 @@ const state = {
   totalViews: 0,
   computedStats: {},
   rdata: [],
+  app: 'pageviews',
+  client: 'o19WonOrHQ',
+  iSocket: {},
   pubData: {},
+  fullData: {},
   timerCount: 0
 }
 
@@ -68,7 +73,7 @@ const calcDiffs = function () {
 const getters = {
   formattedResult: (state) => {
     let v = {...state.socket.message}
-    // console.log(v)
+    console.log(v)
     if (v.type === 'PageviewAggregationResultWrapper') {
       // console.log('Working')
       const modifiedResult = reformat(v)
@@ -114,6 +119,29 @@ const mutations = {
   [types.SOCKET_ONERROR] (state, event) {
     console.error(state, event)
   },
+  [types.OPEN_SOCKET] (state, socket) {
+    console.log('Opening')
+    // let url = 'ws://172.31.22.33:9105/wsApp/' + state.client
+    state.iSocket = socket
+    // state.iSocket.addEventListener('message', function (e) {
+    //   var message = JSON.parse(e.data)
+    //   state.socket.message = message
+    //   if (message.type === 'PageviewAggregationResultWrapper') {
+    //     state.totalViews = message.value.data.count
+    //     state.pubData = message.value.data
+    //     state.pubData.user.values.forEach(uf => {
+    //       if (uf.LOGIN) {
+    //         state.computedStats.loggedIn = Math.round((uf.LOGIN / state.totalViews) * 1000) / 10
+    //       }
+    //     })
+    //     state.pubData.adBlock.values.forEach(ua => {
+    //       if (ua.OFF) {
+    //         state.computedStats.adblock = Math.round((ua.OFF / state.totalViews) * 1000) / 10
+    //       }
+    //     })
+    //   }
+    // })
+  },
   [types.SOCKET_ONMESSAGE] (state, message) {
     state.socket.message = message
     if (message.type === 'PageviewAggregationResultWrapper') {
@@ -131,11 +159,22 @@ const mutations = {
       })
     }
   },
-  [types.UPDATE_PAGEVIEWS] (state, message) {
-    // console.log('Current', state.pageviews.current)
-    // state.pageviews.past = {...state.pageviews.current}
-    // state.pageviews.current = message
-    // console.log('New', state.pageviews.current)
+  [types.UPDATE_DATA] (state, message) {
+    state.socket.message = message
+    if (message.type === 'PageviewAggregationResultWrapper') {
+      state.totalViews = message.value.data.count
+      state.pubData = message.value.data
+      state.pubData.user.values.forEach(uf => {
+        if (uf.LOGIN) {
+          state.computedStats.loggedIn = Math.round((uf.LOGIN / state.totalViews) * 1000) / 10
+        }
+      })
+      state.pubData.adBlock.values.forEach(ua => {
+        if (ua.OFF) {
+          state.computedStats.adblock = Math.round((ua.OFF / state.totalViews) * 1000) / 10
+        }
+      })
+    }
   },
   [types.RESET_COUNT] (state) {
     state.timerCount = 0
@@ -146,24 +185,38 @@ const mutations = {
 }
 
 const actions = {
-  pageviewUpdate ({ commit, state }, message) {
-    commit(types.UPDATE_PAGEVIEWS, {
+  updateData ({ commit, state }, message) {
+    commit(types.UPDATE_DATA, {
       message: message
+    })
+  },
+  openSocket ({ commit, state }) {
+    let url = 'ws://172.31.22.33:9105/wsApp/' + state.client
+    let iSocket = new WebSocket(url)
+    commit(types.OPEN_SOCKET, {
+      socket: iSocket
+    })
+    iSocket.addEventListener('message', function (e) {
+      var message = JSON.parse(e.data)
+      console.log(message)
+      commit(types.UPDATE_DATA, {
+        message: message
+      })
     })
   },
   testChange ({ commit }) {
     alert('Hello Kevin' + '!')
 
-    commit(types.UPDATE_PAGEVIEWS, {
-      message: {}
-    })
+    // commit(types.UPDATE_PAGEVIEWS, {
+    //   message: {}
+    // })
   },
   testChange2 ({ commit }) {
     alert('Hello Deezy' + '!')
 
-    commit(types.UPDATE_PAGEVIEWS, {
-      message: {}
-    })
+    // commit(types.UPDATE_PAGEVIEWS, {
+    //   message: {}
+    // })
   }
 }
 

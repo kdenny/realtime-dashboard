@@ -8,8 +8,9 @@ import store from './store'
 import router from './router'
 import { sync } from 'vuex-router-sync'
 import VuesticPlugin from 'src/components/vuestic-components/vuestic-components-plugin'
-import VueNativeSock from 'vue-native-websocket'
+// import VueNativeSock from 'vue-native-websocket'
 import './i18n'
+// import 'socket.io'
 
 window._ = require('lodash')
 
@@ -18,7 +19,7 @@ Vue.use(BootstrapVue)
 
 // NOTE: workaround for VeeValidate + vuetable-2
 Vue.use(VeeValidate, {fieldsBagName: 'formFields'})
-Vue.use(VueNativeSock, 'ws://172.31.22.33:9105/wsApp/o19WonOrHQ', { store: store, format: 'json' })
+// Vue.use(VueNativeSock, 'ws://172.31.22.33:9105/wsApp/o19WonOrHQ', { store: store, format: 'json' })
 
 sync(store, router)
 

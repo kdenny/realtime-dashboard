@@ -14,7 +14,15 @@ export const SOCKET_ONERROR = 'SOCKET_ONERROR'
 
 export const SOCKET_ONMESSAGE = 'SOCKET_ONMESSAGE'
 
-export const UPDATE_PAGEVIEWS = 'UPDATE_PAGEVIEWS'
+export const UPDATE_DATA = 'UPDATE_DATA'
+
+export const OPEN_SOCKET = 'OPEN_SOCKET'
+
+export const SELECT_APP = 'SELECT_APP'
+
+export const SELECT_CLIENT = 'SELECT_CLIENT'
+
+export const CLOSE_SOCKET = 'CLOSE_SOCKET'
 
 export const RESET_COUNT = 'RESET_COUNT'
 

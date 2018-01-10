@@ -5,7 +5,6 @@ import VuexI18n from 'vuex-i18n' // load vuex i18n module
 import app from './modules/app'
 import pageviews from './modules/pageviews'
 import menu from './modules/menu'
-
 import * as getters from './getters'
 
 Vue.use(Vuex)
